@@ -1,0 +1,185 @@
+﻿@model MigrationPortal.Models.UserModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">    
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/UserformStyle.css" rel="stylesheet" />   
+    <title>UserForm</title>
+</head>
+<body>    
+    <div class="wrapper">  
+
+        <nav id="sidebar">
+            <div class="sidebar-header">
+                <h3>Device Registration</h3>
+            </div>
+            <ul class="list-unstyled components">               
+                <li class="active">
+                    <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">
+                        Home
+                        <i class="far fa-arrow-alt-circle-down"></i>
+                    </a>
+                    <ul class="collapse list-unstyled" id="homeSubmenu">
+                        <li><a href="#">Provisioning Status</a></li>
+                        <li><a href="#">Device Details</a></li>
+                        <li><a href="#">Help</a></li>
+                    </ul>
+                </li>
+                <li>                    
+                    <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">State Migration Application</a>
+                    <ul class="collapse list-unstyled" id="pageSubmenu">
+                        <li><a href="#">Download</a></li>
+                        <li><a href="#">Help</a></li>                        
+                    </ul>                  
+                </li>               
+                <li>
+                    <a href="#">Contact</a>
+                </li>
+            </ul>
+            
+        </nav>
+
+        <div id="content">
+            <nav class="navbar navbar-default">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <button type="button" id="sidebarCollapse" class="btn btn-danger navbar-btn">
+                            <i class="glyphicon glyphicon-align-left"></i>
+                            <span>Menu</span>
+                        </button>
+                    </div>
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a href="#">SignOut</a></li>                            
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="container">
+                <div class="row col-sm-6">
+                    @using (Html.BeginForm("UserForm", "Home", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    {
+                        if (@Model == null)
+                        {
+                            <div class="form-group">
+                                <div class="input-group">
+                                    @Html.TextBoxFor(m => Model.UserName, new { placeholder = "User Name", @class = "txt-input form-control", @style = "border-radius:0px" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group col-sm-12">
+                                    @Html.TextBoxFor(m => Model.UserID, new { placeholder = "User ID", @class = "txt-input col-sm-2 form-control", @style = "border-radius:0px" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group col-sm-12">
+                                    @Html.TextBoxFor(m => Model.UserDept, new { placeholder = "User Department", @class = "txt-input col-sm-2 form-control", @style = "border-radius:0px" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group col-sm-12">
+                                    @Html.TextBoxFor(m => Model.UserCompany, new { placeholder = "User Company", @class = "txt-input col-sm-2 form-control", @style = "border-radius:0px" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group col-sm-12">
+                                    @Html.TextBoxFor(m => Model.Hostname, new { placeholder = "Service Tag", @class = "txt-input col-sm-2 form-control", @style = "border-radius:0px" })
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="form-group">
+                                <div class="input-group col-sm-12">
+                                    <input class="col-sm-2 form-control" style="border-radius:0px" type="text" name="UserName" value="@Model.UserName" />
+
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group col-sm-12">
+                                    <input class="col-sm-2 form-control" style="border-radius:0px" type="text" name="UserID" value="@Model.UserID" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group col-sm-12">
+                                    <input class="col-sm-2 form-control" style="border-radius:0px" type="text" name="UserDept" value="@Model.UserDept" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group col-sm-12">
+                                    <input class="col-sm-2 form-control" style="border-radius:0px" type="text" name="UserCompany" value="@Model.UserCompany" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group col-sm-12">
+                                    <input class="col-sm-2 form-control" style="border-radius:0px" type="text" name="Hostname" value="@Model.Hostname" />
+                                </div>
+                            </div>
+                            if (Model.NetworkAdapters != null)
+                            {
+                                <div>
+                                    <table class="table table-hover table-bordered table-condensed">
+                                        <thead>
+                                            <tr>
+                                                <th>Adapter Name</th>
+                                                <th>Mac Address</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in Model.NetworkAdapters)
+                                            {
+                                                <tr class="table table-hover">
+                                                    <td class="text-nowrap">@Html.DisplayFor(m => item.Name)</td>
+                                                    <td class="text-nowrap">@Html.DisplayFor(m => item.MacAddress)</td>
+                                                </tr>
+                                            }
+                                        </tbody>
+
+
+                                    </table>
+                                </div>
+                            }
+
+
+                        }
+
+                        <div class="input-group">
+                            <div class="checkbox" style="border-radius:0px">
+                                @Html.CheckBoxFor(m => Model.AcceptTC)
+                                @Html.LabelFor(m => Model.AcceptTC)
+
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <br />
+                            <input type="submit" value="Submit" class="btn btn-default btn-success" style="border-radius:0px" />
+
+                        </div>
+
+                    }
+
+                </div>
+
+            </div>
+
+        </div>
+             
+        
+
+    </div>
+
+    @*<script src="~/Scripts/jquery-1.10.2.min.js"></script>*@ 
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>     
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/userform.js"></script>
+</body>
+</html>
